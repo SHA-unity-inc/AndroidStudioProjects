@@ -1,0 +1,7 @@
+<resources>
+    <string name="button_one">Button One</string>
+    <string name="button_two">Button Two</string>
+    <string name="button_three">Button Three</string>
+    <string name="app_name">Shloma</string>
+</resources>
+
