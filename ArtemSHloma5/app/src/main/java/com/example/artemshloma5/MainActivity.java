@@ -94,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 2:
+                intent = new Intent(this, SpinnerActivity.class);
+                intent.putExtra("rc", realClasses);
+                intent.putExtra("nowClass", nowClass);
+                intent.putExtra("images", imagesArray);
+                startActivity(intent);
                 break;
             default:
                 Log.e("DEBUG LOG FROM C#", "Тип не известен");
