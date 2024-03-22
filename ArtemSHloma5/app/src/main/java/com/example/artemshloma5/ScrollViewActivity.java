@@ -68,10 +68,14 @@ public class ScrollViewActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             textView.setText(microClass.name);
+
+            if (microClasses.indexOf(microClass) != microClasses.size() - 1) {
+                textView.setPadding(0, 0, 0, 20);
+            }
+
             linearLayout.addView(textView);
         }
     }
-
 
     public void AddNewItem(View view){
         TextInputEditText inputEditText = findViewById(R.id.textInputEditText);
@@ -79,5 +83,12 @@ public class ScrollViewActivity extends AppCompatActivity {
         realClasses.get(nowClass).podClass.add(new MicroClass(text, imagesArray.get(random.nextInt(imagesArray.size()))));
 
         CreateListOfMicroClass();
+    }
+
+    public void BackToMain(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("rc", realClasses);
+        intent.putExtra("images", imagesArray);
+        startActivity(intent);
     }
 }

@@ -72,4 +72,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         CreateListOfMicroClass();
     }
+
+    public void BackToMain(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("rc", realClasses);
+        intent.putExtra("images", imagesArray);
+        startActivity(intent);
+    }
 }

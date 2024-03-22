@@ -29,14 +29,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Resources res = getResources();
-        imagesArray.add(res.getIdentifier("apel_aja", "drawable", getPackageName()));
-        imagesArray.add(res.getIdentifier("catt", "drawable", getPackageName()));
-        imagesArray.add(res.getIdentifier("banana", "drawable", getPackageName()));
+        Intent intent = getIntent();
 
-        AddNewMegaClass("Apple", new ArrayList<String>(Arrays.asList("Grenny Smith", "Pupa Lup", "Escho Odin Shloma")), 0, 0);
-        AddNewMegaClass("Bananas", new ArrayList<String>(Arrays.asList("Africa", "Aziya", "Jew Banana")), 1, 2);
-        AddNewMegaClass("Animes", new ArrayList<String>(Arrays.asList("Made in Abyss", "Jojo", "Boku No")), 2, 1);
+        if (intent != null) {
+            Object object = intent.getSerializableExtra("rc");
+            if (object instanceof ArrayList) {
+                realClasses = (ArrayList<MegaClass>) object;
+                imagesArray = intent.getIntegerArrayListExtra("images");
+            }else{
+                Resources res = getResources();
+                imagesArray.add(res.getIdentifier("apel_aja", "drawable", getPackageName()));
+                imagesArray.add(res.getIdentifier("catt", "drawable", getPackageName()));
+                imagesArray.add(res.getIdentifier("banana", "drawable", getPackageName()));
+
+                AddNewMegaClass("Apple", new ArrayList<String>(Arrays.asList("Grenny Smith", "Pupa Lup", "Escho Odin Shloma")), 0, 0);
+                AddNewMegaClass("Bananas", new ArrayList<String>(Arrays.asList("Africa", "Aziya", "Jew Banana")), 1, 2);
+                AddNewMegaClass("Animes", new ArrayList<String>(Arrays.asList("Made in Abyss", "Jojo", "Boku No")), 2, 1);
+            }
+        }
+        else{
+            Resources res = getResources();
+            imagesArray.add(res.getIdentifier("apel_aja", "drawable", getPackageName()));
+            imagesArray.add(res.getIdentifier("catt", "drawable", getPackageName()));
+            imagesArray.add(res.getIdentifier("banana", "drawable", getPackageName()));
+
+            AddNewMegaClass("Apple", new ArrayList<String>(Arrays.asList("Grenny Smith", "Pupa Lup", "Escho Odin Shloma")), 0, 0);
+            AddNewMegaClass("Bananas", new ArrayList<String>(Arrays.asList("Africa", "Aziya", "Jew Banana")), 1, 2);
+            AddNewMegaClass("Animes", new ArrayList<String>(Arrays.asList("Made in Abyss", "Jojo", "Boku No")), 2, 1);
+        }
 
         CreateListOfMegaClass();
     }
