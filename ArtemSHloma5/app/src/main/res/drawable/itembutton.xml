@@ -1,0 +1,26 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Состояние кнопки, когда она нажата -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:topRightRadius="35dp"
+                android:bottomRightRadius="35dp" />
+            <solid android:color="#000000" />
+        </shape>
+    </item>
+    <!-- Состояние кнопки, когда она в фокусе (получает фокус) -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:topRightRadius="35dp"
+                android:bottomRightRadius="35dp" />
+            <solid android:color="#000000" />
+        </shape>
+    </item>
+    <!-- Состояние кнопки по умолчанию (не нажата и не в фокусе) -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:topRightRadius="35dp"
+                android:bottomRightRadius="35dp" />
+            <solid android:color="#FF0000" />
+        </shape>
+    </item>
+</selector>
