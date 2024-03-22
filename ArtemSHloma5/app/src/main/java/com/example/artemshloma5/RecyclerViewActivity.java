@@ -15,10 +15,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Vector;
+import java.io.Serializable;
 
 public class RecyclerViewActivity extends AppCompatActivity {
-    Vector<MegaClass> realClasses;
+    ArrayList<MegaClass> realClasses;
     int nowClass;
 
     @Override
@@ -35,7 +37,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            realClasses = (Vector<MegaClass>) intent.getSerializableExtra("rc");
+            Object object = intent.getSerializableExtra("rc");
+            if (object instanceof ArrayList) {
+                realClasses = (ArrayList<MegaClass>) object;
+            }else{
+                Log.e("DEBUG LOG FROM C#", "Неправильный класс: " + object.getClass());
+            }
             nowClass = intent.getIntExtra("nowClass", -1);
         }
 
@@ -44,10 +51,10 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
     private void CreateListOfMicroClass(){
 
-        RecyclerView recyclerView = findViewById(R.id.main_resycler);
+        RecyclerView recyclerView = findViewById(R.id.recycler_two);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        MegaClassAdapter adapter = new MegaClassAdapter(realClasses);
+        MicroClassAdapterRecycler adapter = new MicroClassAdapterRecycler(realClasses.get(nowClass).podClass);
         recyclerView.setAdapter(adapter);
         recyclerView.bringToFront();
     }

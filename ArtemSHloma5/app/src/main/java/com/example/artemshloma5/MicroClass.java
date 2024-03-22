@@ -1,9 +1,13 @@
 package com.example.artemshloma5;
 
-public class MicroClass {
-    String name;
+import java.io.Serializable;
 
-    public MicroClass(String name){
+public class MicroClass implements Serializable {
+    String name;
+    int image;
+
+    public MicroClass(String name, int image){
         this.name = name;
+        this.image = image;
     }
 }

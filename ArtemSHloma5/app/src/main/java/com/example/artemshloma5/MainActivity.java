@@ -17,13 +17,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
-    Vector<MegaClass> realClasses = new Vector<>();
-    Vector<Integer> imagesArray = new Vector<>();
-    Random random;
+    ArrayList<MegaClass> realClasses = new ArrayList<>();
+    ArrayList<Integer> imagesArray = new ArrayList<>();
+    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         imagesArray.add(res.getIdentifier("catt", "drawable", getPackageName()));
         imagesArray.add(res.getIdentifier("banana", "drawable", getPackageName()));
 
-        AddNewMegaClass("Apple", new Vector<String>(Arrays.asList("Grenny Smith", "Pupa Lup", "Escho Odin Shloma")), 0, 0);
-        AddNewMegaClass("Bananas", new Vector<String>(Arrays.asList("Africa", "Aziya", "Jew Banana")), 1, 2);
-        AddNewMegaClass("Animes", new Vector<String>(Arrays.asList("Made in Abyss", "Jojo", "Boku No")), 2, 1);
+        AddNewMegaClass("Apple", new ArrayList<String>(Arrays.asList("Grenny Smith", "Pupa Lup", "Escho Odin Shloma")), 0, 0);
+        AddNewMegaClass("Bananas", new ArrayList<String>(Arrays.asList("Africa", "Aziya", "Jew Banana")), 1, 2);
+        AddNewMegaClass("Animes", new ArrayList<String>(Arrays.asList("Made in Abyss", "Jojo", "Boku No")), 2, 1);
 
         CreateListOfMegaClass();
     }
@@ -93,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.bringToFront();
     }
 
-    private void AddNewMegaClass(String name, Vector<String> names, int type, int k){
-        Vector<MicroClass> mc = new Vector<MicroClass>();
+    private void AddNewMegaClass(String name, ArrayList<String> names, int type, int k){
+        ArrayList<MicroClass> mc = new ArrayList<MicroClass>();
         for (int i = 0; i < names.size(); i++){
-            mc.add(new MicroClass(names.get(i)));
+            mc.add(new MicroClass(names.get(i), imagesArray.get(random.nextInt(imagesArray.size()))));
         }
 
         Log.i("DEBUG LOG FROM C#", String.valueOf(k));

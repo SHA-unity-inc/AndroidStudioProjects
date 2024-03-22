@@ -1,14 +1,15 @@
 package com.example.artemshloma5;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-public class MegaClass {
+public class MegaClass implements Serializable {
     String name;
     int type, image;
-    Vector<MicroClass> podClass;
+    ArrayList<MicroClass> podClass;
 
-    public MegaClass(String name, Vector<MicroClass> microClasses, int type, int image){
+    public MegaClass(String name, ArrayList<MicroClass> microClasses, int type, int image){
         this.name = name;
         podClass = microClasses;
         this.type = type;
