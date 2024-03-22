@@ -57,15 +57,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void GoToType(int type, int nowClass){
+        Intent intent;
         switch (type){
             case 0:
-                Intent intent = new Intent(this, RecyclerViewActivity.class);
+                intent = new Intent(this, RecyclerViewActivity.class);
                 intent.putExtra("rc", realClasses);
                 intent.putExtra("nowClass", nowClass);
                 intent.putExtra("images", imagesArray);
                 startActivity(intent);
                 break;
             case 1:
+                intent = new Intent(this, ScrollViewActivity.class);
+                intent.putExtra("rc", realClasses);
+                intent.putExtra("nowClass", nowClass);
+                intent.putExtra("images", imagesArray);
+                startActivity(intent);
                 break;
             case 2:
                 break;
