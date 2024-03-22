@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, RecyclerViewActivity.class);
                 intent.putExtra("rc", realClasses);
                 intent.putExtra("nowClass", nowClass);
+                intent.putExtra("images", imagesArray);
                 startActivity(intent);
                 break;
             case 1:

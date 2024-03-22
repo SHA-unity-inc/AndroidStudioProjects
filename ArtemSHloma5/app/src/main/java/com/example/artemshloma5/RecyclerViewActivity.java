@@ -15,13 +15,18 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Vector;
 import java.io.Serializable;
 
 public class RecyclerViewActivity extends AppCompatActivity {
     ArrayList<MegaClass> realClasses;
     int nowClass;
+    ArrayList<Integer> imagesArray;
+    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 Log.e("DEBUG LOG FROM C#", "Неправильный класс: " + object.getClass());
             }
             nowClass = intent.getIntExtra("nowClass", -1);
+            imagesArray = intent.getIntegerArrayListExtra("images");
         }
 
         CreateListOfMicroClass();
@@ -57,5 +63,13 @@ public class RecyclerViewActivity extends AppCompatActivity {
         MicroClassAdapterRecycler adapter = new MicroClassAdapterRecycler(realClasses.get(nowClass).podClass);
         recyclerView.setAdapter(adapter);
         recyclerView.bringToFront();
+    }
+
+    public void AddNewItem(View view){
+        TextInputEditText inputEditText = findViewById(R.id.textInputEditText);
+        String text = String.valueOf(inputEditText.getText());
+        realClasses.get(nowClass).podClass.add(new MicroClass(text, imagesArray.get(random.nextInt(imagesArray.size()))));
+
+        CreateListOfMicroClass();
     }
 }
