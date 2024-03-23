@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             imagesArray.add(res.getIdentifier("catt", "drawable", getPackageName()));
             imagesArray.add(res.getIdentifier("banana", "drawable", getPackageName()));
 
-            AddNewMegaClass("Apple", new ArrayList<String>(Arrays.asList("Grenny Smith", "Pupa Lup", "Escho Odin Shloma")), 0, 0);
+            AddNewMegaClass("Apple", new ArrayList<String>(Arrays.asList("Grenny Smith", "Yabloko", "Escho Odin Shloma")), 0, 0);
             AddNewMegaClass("Bananas", new ArrayList<String>(Arrays.asList("Africa", "Aziya", "Jew Banana")), 1, 2);
             AddNewMegaClass("Animes", new ArrayList<String>(Arrays.asList("Made in Abyss", "Jojo", "Boku No")), 2, 1);
         }

@@ -22,7 +22,7 @@ public class MicroClassAdapterRecycler extends RecyclerView.Adapter<MicroClassAd
     @NonNull
     @Override
     public MicroClassAdapterRecycler.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.mega_class_button, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_micro_button, parent, false);
         return new MicroClassAdapterRecycler.ItemViewHolder(itemView);
     }
 

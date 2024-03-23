@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
 import java.io.Serializable;
@@ -78,5 +79,25 @@ public class RecyclerViewActivity extends AppCompatActivity {
         intent.putExtra("rc", realClasses);
         intent.putExtra("images", imagesArray);
         startActivity(intent);
+    }
+
+    public void DeleteItem(View view){
+        LinearLayout linearLayout = (LinearLayout) view.getParent();
+        TextView textView = linearLayout.findViewById(R.id.button_text);
+        String text = textView.getText().toString();
+        Log.i("DEBUG LOG FROM C#", "ТЕКСТ УКРАДЕН: " + text);
+        int i = FindNameInMicroClass(text);
+        realClasses.get(nowClass).podClass.remove(i);
+
+        CreateListOfMicroClass();
+    }
+
+    private int FindNameInMicroClass(String txt){
+        for(int i = 0; i < realClasses.get(nowClass).podClass.size(); i++){
+            if(Objects.equals(realClasses.get(nowClass).podClass.get(i).name, txt)){
+                return i;
+            }
+        }
+        return -1;
     }
 }

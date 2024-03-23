@@ -18,11 +18,17 @@
 
     <TextView
         android:id="@+id/button_text"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="100dp"
         android:gravity="center"
         android:text="Текст кнопки"
         android:textColor="@color/black"
         android:textSize="36sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Удалить"
+        android:onClick="DeleteItem"/>
 
 </LinearLayout>
