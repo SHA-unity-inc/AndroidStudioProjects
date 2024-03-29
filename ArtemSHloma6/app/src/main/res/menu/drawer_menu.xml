@@ -2,13 +2,16 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/home"
+        android:onClick="Home"
         android:title="Главная" />
     <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/notifications"
+        android:onClick="Notifications"
         android:title="Уведомления" />
     <item
         android:id="@+id/nav_setting"
 
+        android:onClick="Settings"
         android:title="Настрйоки" />
 </menu>
