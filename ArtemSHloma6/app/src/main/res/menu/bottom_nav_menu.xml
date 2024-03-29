@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bottom_bar_item1"
-        android:icon="@drawable/ic_menu"
-        android:title="A" />
+        android:icon="@drawable/ic_human"
+        android:title="Сталин" />
     <item
         android:id="@+id/bottom_bar_item2"
-        android:icon="@drawable/ic_menu"
-        android:title="B" />
+        android:icon="@drawable/ic_human_sit"
+        android:title="Чарли чаплин" />
+    <item
+        android:id="@+id/bottom_bar_item3"
+        android:icon="@drawable/ic_money"
+        android:title="Иуда" />
 </menu>
