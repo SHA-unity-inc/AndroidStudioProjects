@@ -77,22 +77,22 @@ public class BBActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.bottom_bar_item1){
-                    // Обработка выбора раздела "Домой"
+                    text.setText("Сталин");
                     image.setBackground(ContextCompat.getDrawable(BBActivity.this, R.drawable.stalin));
                     Toast.makeText(BBActivity.this,"Сталин",
                             Toast.LENGTH_LONG).show();
                     return true;
                 }
                 else if (item.getItemId()==R.id.bottom_bar_item2){
-                    // Обработка выбора раздела "Настройки"
+                    text.setText("Чарли чаплин");
                     image.setBackground(ContextCompat.getDrawable(BBActivity.this, R.drawable.chaplin));
                     Toast.makeText(BBActivity.this,"Чарли чаплин",
                             Toast.LENGTH_LONG).show();
                 }
                 else if (item.getItemId()==R.id.bottom_bar_item3){
-                    // Обработка выбора раздела "Настройки"
+                    text.setText("Деньги");
                     image.setBackground(ContextCompat.getDrawable(BBActivity.this, R.drawable.jewcat));
-                    Toast.makeText(BBActivity.this,"Иуда",
+                    Toast.makeText(BBActivity.this,"Деньги",
                             Toast.LENGTH_LONG).show();
                 }
                 return false;
