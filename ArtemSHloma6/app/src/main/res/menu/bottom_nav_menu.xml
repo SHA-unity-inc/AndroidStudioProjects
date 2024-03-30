@@ -11,5 +11,5 @@
     <item
         android:id="@+id/bottom_bar_item3"
         android:icon="@drawable/ic_money"
-        android:title="Иуда" />
+        android:title="Деньги" />
 </menu>

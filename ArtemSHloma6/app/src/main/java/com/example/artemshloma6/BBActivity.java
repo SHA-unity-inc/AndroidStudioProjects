@@ -91,7 +91,7 @@ public class BBActivity extends AppCompatActivity {
                 }
                 else if (item.getItemId()==R.id.bottom_bar_item3){
                     text.setText("Деньги");
-                    image.setBackground(ContextCompat.getDrawable(BBActivity.this, R.drawable.jewcat));
+                    image.setBackground(ContextCompat.getDrawable(BBActivity.this, R.drawable.money));
                     Toast.makeText(BBActivity.this,"Деньги",
                             Toast.LENGTH_LONG).show();
                 }
