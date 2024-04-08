@@ -2,6 +2,7 @@ package com.example.artemshloma8;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,5 +86,31 @@ public class MainActivity extends AppCompatActivity {
         // Запуск задач последовательно
         WorkManager.getInstance(this).beginWith(workRequest).then(workRequest2).enqueue();
 
+    }
+
+    public void loadImageFromUrl(View view) {
+        String url = "https://random.dog/woof.json";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        DogImage dogImage = gson.fromJson(response.toString(), DogImage.class);
+                        ImageView imageView = findViewById(R.id.imageView);
+                        Glide.with(getApplicationContext()).load(dogImage.getUrl()).into(imageView);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+
+        requestQueue.add(jsonObjectRequest);
     }
 }

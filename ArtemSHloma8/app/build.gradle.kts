@@ -31,6 +31,11 @@ android {
 dependencies {
 
     implementation("androidx.work:work-runtime:2.9.0")
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.google.code.gson:gson:2.8.8")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
 
     implementation(libs.appcompat)
     implementation(libs.material)
