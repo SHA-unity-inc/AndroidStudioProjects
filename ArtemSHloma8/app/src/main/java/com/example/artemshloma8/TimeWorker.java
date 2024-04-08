@@ -1,8 +1,15 @@
 package com.example.artemshloma8;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -14,12 +21,18 @@ public class TimeWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Random random = new Random();
-        while (!isStopped()) {
-            System.out.println(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        Data inputData = getInputData();
+        int timer = 0;
+
+        while (!isStopped() && timer <= 15) {
             try {
-                int randomTime = random.nextInt(10) + 1;
-                TimeUnit.SECONDS.sleep(randomTime);
+                int time = 2;
+                TimeUnit.SECONDS.sleep(time);
+                String currentTime = sdf.format(new Date());
+                System.out.println(currentTime + " " + inputData.getString("name").toString());
+                timer += time;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
