@@ -101,4 +101,23 @@ public class MainActivity extends AppCompatActivity {
                 .create()
                 .show();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("EdTFN", editTextFileName.getText().toString());
+        outState.putString("EdTFC", editTextFileContent.getText().toString());
+        outState.putString("ExTFN", exportTextFileContent.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        editTextFileName.setText(
+                savedInstanceState.getString("EdTFN"));
+        editTextFileContent.setText(
+                savedInstanceState.getString("EdTFC"));
+        exportTextFileContent.setText(
+                savedInstanceState.getString("ExTFN"));
+    }
 }
