@@ -19,7 +19,7 @@ public class SHAService extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer = MediaPlayer.create(this, R.raw.gimn); // Замените 'your_music_file' на имя вашего файла музыки в папке 'res/raw'
+        mediaPlayer = MediaPlayer.create(this, R.raw.gimn);
     }
 
     @Override
