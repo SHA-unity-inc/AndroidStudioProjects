@@ -17,6 +17,12 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
         editTextFileName = findViewById(R.id.editTextFileName);
         editTextFileContent = findViewById(R.id.editTextFileContent);
         exportTextFileContent = findViewById(R.id.answerText);
+
     }
 
-    public void createFile(View view) {
-        String fileName = editTextFileName.getText().toString();
-        String fileContent = editTextFileContent.getText().toString();
-        fileContent += "\n";
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
 
+    private void createFileLocal(String fileName, String fileContent){
         FileOutputStream fos;
         try {
             fos = openFileOutput(fileName, MODE_PRIVATE);
@@ -50,9 +58,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void readFile(View view) {
-        String fileName = editTextFileName.getText().toString();
+    private void createFileGlobal(String fileName, String fileContent){
+        File file = new File(Environment.getExternalStorageDirectory(), fileName);
 
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(fileContent.getBytes());
+
+            Toast.makeText(MainActivity.this, "Файл создан", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createFile(View view) {
+        String fileName = editTextFileName.getText().toString();
+        String fileContent = editTextFileContent.getText().toString();
+        fileContent += "\n";
+        if (isExternalStorageReadable()) {
+            Log.i("File Type", "Global");
+            createFileGlobal(fileName, fileContent);
+        }else{
+            Log.i("File Type", "Local");
+            createFileLocal(fileName, fileContent);
+        }
+    }
+
+    private void readFileLocal(String fileName){
         FileInputStream fis;
         try {
             fis = openFileInput(fileName);
@@ -67,6 +98,38 @@ public class MainActivity extends AppCompatActivity {
             exportTextFileContent.setText("Файл не найден");
 
             e.printStackTrace();
+        }
+    }
+
+    private void readFileGlobal(String fileName){
+        FileInputStream fis;
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), fileName);
+
+            fis = new FileInputStream(file);
+            byte[] input = new byte[fis.available()];
+            while (fis.read(input) != -1) {}
+            fis.close();
+
+            exportTextFileContent.setText(new String(input));
+
+            Toast.makeText(MainActivity.this, "Файл прочитан", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            exportTextFileContent.setText("Файл не найден");
+
+            e.printStackTrace();
+        }
+
+    }
+
+    public void readFile(View view) {
+        String fileName = editTextFileName.getText().toString();
+        if (isExternalStorageReadable()) {
+            Log.i("File Type", "Global");
+            readFileGlobal(fileName);
+        }else{
+            Log.i("File Type", "Local");
+            readFileLocal(fileName);
         }
     }
 
