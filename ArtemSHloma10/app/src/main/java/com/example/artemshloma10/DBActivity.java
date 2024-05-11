@@ -1,37 +1,26 @@
 package com.example.artemshloma10;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import java.sql.*;
+
 import java.util.Random;
 
 public class DBActivity extends AppCompatActivity {
 
+    private UserDataHelper userDataHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dbactivity);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }
 
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/androidDB";
-    private static final String USER = "postgres";
-    private static final String PASS = "postgres";
-
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, USER, PASS);
+        userDataHelper = new UserDataHelper(this);
     }
 
     public void createUserData(View view) {
@@ -42,23 +31,61 @@ public class DBActivity extends AppCompatActivity {
         String address = generateRandomAddress();
         int age = generateRandomAge();
         String gender = generateRandomGender();
-        Date registrationDate = new Date(System.currentTimeMillis());
-        createUserData(id, userName, email, phoneNumber, address, age, gender, registrationDate);
+        String registrationDate = String.valueOf(System.currentTimeMillis());
+
+        SQLiteDatabase db = userDataHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("id", id);
+        values.put("user_name", userName);
+        values.put("email", email);
+        values.put("phone_number", phoneNumber);
+        values.put("address", address);
+        values.put("age", age);
+        values.put("gender", gender);
+        values.put("registration_date", registrationDate);
+
+        db.insert("user_data", null, values);
+        db.close();
     }
 
     public void getUserData(View view) {
-        getUserData();
+        SQLiteDatabase db = userDataHelper.getReadableDatabase();
+        Cursor cursor = db.query("user_data", null, null, null, null, null, null);
+
+        StringBuilder userDataText = new StringBuilder();
+        while (cursor.moveToNext()) {
+            userDataText.append("User ID: ").append(cursor.getString(cursor.getColumnIndex("id"))).append("\n");
+            userDataText.append("Username: ").append(cursor.getString(cursor.getColumnIndex("user_name"))).append("\n");
+            userDataText.append("Email: ").append(cursor.getString(cursor.getColumnIndex("email"))).append("\n");
+            userDataText.append("Phone Number: ").append(cursor.getString(cursor.getColumnIndex("phone_number"))).append("\n");
+            userDataText.append("Address: ").append(cursor.getString(cursor.getColumnIndex("address"))).append("\n");
+            userDataText.append("Age: ").append(cursor.getInt(cursor.getColumnIndex("age"))).append("\n");
+            userDataText.append("Gender: ").append(cursor.getString(cursor.getColumnIndex("gender"))).append("\n");
+            userDataText.append("Registration Date: ").append(cursor.getString(cursor.getColumnIndex("registration_date"))).append("\n\n");
+        }
+        cursor.close();
+        db.close();
+
+        ((TextView)findViewById(R.id.currentPrefs)).setText(userDataText);
     }
 
     public void deleteUserData(View view) {
         String id = ((EditText)findViewById(R.id.userNumberInput)).getText().toString();
-        deleteUserData(id);
+
+        SQLiteDatabase db = userDataHelper.getWritableDatabase();
+        db.delete("user_data", "id = ?", new String[]{id});
+        db.close();
     }
 
     public void changeUserNameById(View view) {
         String id = ((EditText)findViewById(R.id.userNumberInput)).getText().toString();
         String newUserName = ((EditText)findViewById(R.id.userNameInput)).getText().toString();
-        changeUserNameById(id, newUserName);
+
+        SQLiteDatabase db = userDataHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("user_name", newUserName);
+        db.update("user_data", values, "id = ?", new String[]{id});
+        db.close();
     }
 
     // Методы для генерации случайных значений
@@ -77,70 +104,11 @@ public class DBActivity extends AppCompatActivity {
     }
 
     private int generateRandomAge() {
-        return new Random().nextInt(80) + 18; // Генерация возраста от 18 до 97 лет
+        return new Random().nextInt(80) + 20;
     }
 
     private String generateRandomGender() {
         String[] genders = {"Male", "Female", "Other"};
         return genders[new Random().nextInt(genders.length)];
-    }
-
-    public static void createUserData(String id, String userName, String email, String phoneNumber, String address, int age, String gender, Date registrationDate) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO user_data (id, user_name, email, phone_number, address, age, gender, registration_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
-            stmt.setString(1, id);
-            stmt.setString(2, userName);
-            stmt.setString(3, email);
-            stmt.setString(4, phoneNumber);
-            stmt.setString(5, address);
-            stmt.setInt(6, age);
-            stmt.setString(7, gender);
-            stmt.setDate(8, registrationDate);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getUserData() {
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM user_data")) {
-            StringBuilder userDataText = new StringBuilder();
-            while (rs.next()) {
-                userDataText.append("User ID: ").append(rs.getString("id")).append("\n");
-                userDataText.append("Username: ").append(rs.getString("user_name")).append("\n");
-                userDataText.append("Email: ").append(rs.getString("email")).append("\n");
-                userDataText.append("Phone Number: ").append(rs.getString("phone_number")).append("\n");
-                userDataText.append("Address: ").append(rs.getString("address")).append("\n");
-                userDataText.append("Age: ").append(rs.getInt("age")).append("\n");
-                userDataText.append("Gender: ").append(rs.getString("gender")).append("\n");
-                userDataText.append("Registration Date: ").append(rs.getDate("registration_date")).append("\n\n");
-            }
-            ((TextView)findViewById(R.id.currentPrefs)).setText(userDataText);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void deleteUserData(String id) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("DELETE FROM user_data WHERE id = ?")) {
-            stmt.setString(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void changeUserNameById(String id, String newUserName) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE user_data SET user_name = ? WHERE id = ?")) {
-            stmt.setString(1, newUserName);
-            stmt.setString(2, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
