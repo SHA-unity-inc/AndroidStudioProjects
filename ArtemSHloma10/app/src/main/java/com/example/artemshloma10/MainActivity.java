@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Запись данных пользователя
     public void createUserData(View view) {
         String id = ((EditText)findViewById(R.id.userNumberInput)).getText().toString();
         String userName = ((EditText)findViewById(R.id.userNameInput)).getText().toString();
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             String userDataString = sharedPreferences.getString("userData", "[]");
             JSONArray userDataArray = new JSONArray(userDataString);
 
-            // Проверка на уникальность ID
             for (int i = 0; i < userDataArray.length(); i++) {
                 JSONObject userData = userDataArray.getJSONObject(i);
                 if (userData.getString("id").equals(id)) {
@@ -71,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Получение данных пользователя
     public void getUserData() {
         try {
             String userDataString = sharedPreferences.getString("userData", "[]");
@@ -89,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Удаление данных пользователя
     public void deleteUserData(View view) {
         String id = ((EditText)findViewById(R.id.userNumberInput)).getText().toString();
         String userName = ((EditText)findViewById(R.id.userNameInput)).getText().toString();
@@ -116,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Изменение имени пользователя по ID
     public void changeUserNameById(View view) {
         String id = ((EditText)findViewById(R.id.userNumberInput)).getText().toString();
         String newUserName = ((EditText)findViewById(R.id.userNameInput)).getText().toString();
