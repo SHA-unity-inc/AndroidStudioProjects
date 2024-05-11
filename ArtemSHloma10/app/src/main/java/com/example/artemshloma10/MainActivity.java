@@ -1,5 +1,6 @@
 package com.example.artemshloma10;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -142,5 +143,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    public void GoToDB(View view){
+        Intent intent = new Intent(this, DBActivity.class);
+        startActivity(intent);
+    }
 }
