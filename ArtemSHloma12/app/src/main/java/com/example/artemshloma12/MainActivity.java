@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         editTextAuthor = findViewById(R.id.editTextAuthor);
         buttonAdd = findViewById(R.id.buttonAdd);
-        buttonLoad = findViewById(R.id.buttonLoad);
         textViewBooks = findViewById(R.id.textViewBooks); // Находим TextView
 
         buttonAdd.setOnClickListener(view -> {
@@ -42,39 +41,14 @@ public class MainActivity extends AppCompatActivity {
             String author = editTextAuthor.getText().toString();
             addBook(title, author);
         });
-
-        buttonLoad.setOnClickListener(view -> {
-            loadBooks();
-        });
     }
 
     private void addBook(String title, String author) {
         ContentValues values = new ContentValues();
         values.put("title", title);
         values.put("author", author);
-        Uri contentUri = Uri.parse("content://com.example.app.provider/books");
+        Uri contentUri = Uri.parse("content://com.example.app.provider/books"); // Используем Uri второго приложения
         getContentResolver().insert(contentUri, values);
         Toast.makeText(this, "Книга добавлена", Toast.LENGTH_SHORT).show();
-    }
-
-    private void loadBooks() {
-        Uri contentUri = Uri.parse("content://com.example.app.provider/books");
-        ContentResolver resolver = getContentResolver();
-        Cursor cursor = resolver.query(contentUri, new String[]{"_id", "title", "author"}, null, null, "title ASC");
-        if (cursor != null) {
-            try {
-                StringBuilder stringBuilder = new StringBuilder(); // Для формирования строки с книгами
-                int titleColumn = cursor.getColumnIndex("title");
-                int authorColumn = cursor.getColumnIndex("author");
-                while (cursor.moveToNext()) {
-                    String title = cursor.getString(titleColumn);
-                    String author = cursor.getString(authorColumn);
-                    stringBuilder.append("Название: ").append(title).append(", Автор: ").append(author).append("\n"); // Формируем строку
-                }
-                textViewBooks.setText(stringBuilder.toString()); // Устанавливаем текст в TextView
-            } finally {
-                cursor.close();
-            }
-        }
     }
 }

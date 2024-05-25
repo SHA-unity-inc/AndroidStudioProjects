@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 public class BookProvider extends ContentProvider {
     public static final Uri CONTENT_URI =
-            Uri.parse("content://com.example.app.provider/books");
+            Uri.parse("content://com.example.app.provider/books"); // Uri первого приложения
     private SQLiteDatabase db;
     @Override
     public boolean onCreate() {

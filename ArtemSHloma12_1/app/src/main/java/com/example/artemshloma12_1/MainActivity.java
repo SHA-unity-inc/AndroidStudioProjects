@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextName, editTextAuthor;
-    Button buttonAdd, buttonLoad;
+    Button buttonLoad;
     TextView textViewBooks; // Добавлено поле для вывода книг
     SharedPreferences sharedPreferences;
 
@@ -33,32 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
         editTextName = findViewById(R.id.editTextName);
         editTextAuthor = findViewById(R.id.editTextAuthor);
-        buttonAdd = findViewById(R.id.buttonAdd);
         buttonLoad = findViewById(R.id.buttonLoad);
         textViewBooks = findViewById(R.id.textViewBooks); // Находим TextView
-
-        buttonAdd.setOnClickListener(view -> {
-            String title = editTextName.getText().toString();
-            String author = editTextAuthor.getText().toString();
-            addBook(title, author);
-        });
 
         buttonLoad.setOnClickListener(view -> {
             loadBooks();
         });
     }
 
-    private void addBook(String title, String author) {
-        ContentValues values = new ContentValues();
-        values.put("title", title);
-        values.put("author", author);
-        Uri contentUri = Uri.parse("content://com.example.app.provider/books");
-        getContentResolver().insert(contentUri, values);
-        Toast.makeText(this, "Книга добавлена", Toast.LENGTH_SHORT).show();
-    }
-
     private void loadBooks() {
-        Uri contentUri = Uri.parse("content://com.example.app.provider/books");
+        Uri contentUri = Uri.parse("content://com.example.app.provider/books"); // Uri второго приложения
         ContentResolver resolver = getContentResolver();
         Cursor cursor = resolver.query(contentUri, new String[]{"_id", "title", "author"}, null, null, "title ASC");
         if (cursor != null) {

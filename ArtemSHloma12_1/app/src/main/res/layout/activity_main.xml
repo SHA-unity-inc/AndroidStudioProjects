@@ -19,23 +19,12 @@
         android:hint="Автор книги"
         android:layout_below="@id/editTextName"
         android:layout_marginBottom="16dp"/>
-
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Добавить книгу"
-        android:layout_below="@id/editTextAuthor"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentEnd="true"/>
-
     <Button
         android:id="@+id/buttonLoad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Загрузить книги"
-        android:layout_below="@id/buttonAdd"
+        android:layout_below="@id/editTextAuthor"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
         android:layout_alignParentStart="true"/>
